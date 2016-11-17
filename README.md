@@ -11,7 +11,7 @@ The command line app accepts a single argument, which is the time that the patie
 ```
 $ ./availability.rb 12:40
 ```
-The app should check which is the next available slot and book it. It should print the time of the appointment that was booked
+The app should check which is the next available slot and book it. It should print the time of the appointment that was booked.
 
 Additional Requirements
 -----------------------
