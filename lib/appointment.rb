@@ -1,32 +1,27 @@
-require "json"
-
 class Appointment
-  attr_reader :slots, :requested_time
+  attr_reader :slot_data, :requested_time
+  attr_writer :slot_data
 
-  def initialize(time)
-    @requested_time = time
-    get_slots
+  def initialize(slot_data)
+    @slot_data = slot_data
   end
 
-  def get_slots
-    json = File.read("lib/availability_slots.json")
-    @slots = JSON.parse(json)["availability_slots"]
+  def check_availability(requested_time)
+    @requested_time = requested_time
+    raise "Please pick a time between 08:00:00 and 15:00:00" if !valid?
+    raise "No later appointments available. Please pick an earlier time" if !available?
+    book_appointment
   end
 
-  def check_validity
-    if valid?
-      check_availability
-    else
-      raise "Please pick a time between 08:00:00 and 15:00:00"
-    end
+  def book_appointment
+    available_slots = slot_data.select {|slot| slot["time"] >= requested_time}
+    earliest_slot = available_slots[0]
+    remove_appointment(earliest_slot)
   end
 
-  def check_availability
-    if available?
-      "Appointment confirmed at #{@requested_time}"
-    else
-      raise "Appointment unavailable. Please pick an earlier time"
-    end
+  def remove_appointment(earliest_slot)
+    slot_data.delete(earliest_slot)
+    "Appointment confirmed at #{earliest_slot["time"]}"
   end
 
   private
@@ -36,7 +31,7 @@ class Appointment
   end
 
   def available?
-    slots.any? {|slot| slot["time"] >= requested_time}
+    slot_data.any? {|slot| slot["time"] >= requested_time}
   end
 
   # Check if exact time is available ie. "booked" => false or deleted
