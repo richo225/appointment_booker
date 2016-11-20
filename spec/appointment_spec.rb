@@ -28,7 +28,8 @@ describe Appointment do
   context "requested time is not available" do
 
     it "books the next available slot" do
-      expect(appointment.check_availability("08:15:00")).to eq "Appointment confirmed at 08:20:00"
+      appointment.check_availability("08:15:00")
+      expect(appointment.check_availability("08:15:00")).to eq "Appointment confirmed at 08:20:00 with Doctor 1"
     end
 
     it "asks for an earlier time if all later slots unavailable" do
@@ -41,12 +42,12 @@ describe Appointment do
   context "requested time is available" do
 
     it "returns a confirmation message if time is available" do
-      message = "Appointment confirmed at 08:00:00"
+      message = "Appointment confirmed at 08:00:00 with Doctor 1"
       expect(appointment.check_availability("08:00:00")).to eq message
     end
 
     it "user can book same time with both doctors" do
-      message = "Appointment confirmed at 11:00:00"
+      message = "Appointment confirmed at 11:00:00 with Doctor 2"
       appointment.check_availability("11:00:00")
       expect(appointment.check_availability("11:00:00")).to eq message
     end

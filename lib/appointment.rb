@@ -1,6 +1,6 @@
 class Appointment
-  attr_reader :slot_data, :requested_time
-  attr_writer :slot_data
+  attr_reader :requested_time
+  attr_accessor :slot_data
 
   def initialize(slot_data)
     @slot_data = slot_data
@@ -21,7 +21,14 @@ class Appointment
 
   def remove_appointment(earliest_slot)
     slot_data.delete(earliest_slot)
-    "Appointment confirmed at #{earliest_slot["time"]}"
+    puts "Appointment confirmed at #{earliest_slot["time"]} with Doctor #{earliest_slot["doctor_id"]}"
+    print_menu
+  end
+
+  def print_menu
+    puts "Please enter another time:"
+    input = STDIN.gets.chomp
+    check_availability(input) if !input.empty?
   end
 
   private
@@ -33,10 +40,5 @@ class Appointment
   def available?
     slot_data.any? {|slot| slot["time"] >= requested_time}
   end
-
-  # Check if exact time is available ie. "booked" => false or deleted
-  # If it is, run booking method and either delete that appointment or add a key "booked" => true
-    # Write this to the JSON file
-  # If it isn't, find nearest value and repeat
 
 end
