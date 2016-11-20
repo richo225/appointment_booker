@@ -22,13 +22,15 @@ class Appointment
   def remove_appointment(earliest_slot)
     slot_data.delete(earliest_slot)
     puts "Appointment confirmed at #{earliest_slot["time"]} with Doctor #{earliest_slot["doctor_id"]}"
-    print_menu
   end
 
   def print_menu
-    puts "Please enter another time:"
-    input = STDIN.gets.chomp
-    check_availability(input) if !input.empty?
+    loop do
+      puts "Please enter another time:"
+      input = STDIN.gets.chomp
+      break if input.empty?
+      check_availability(input)
+    end
   end
 
   private
