@@ -56,4 +56,13 @@ describe Appointment do
       end
     end
   end
+
+  describe "#print_menu" do
+
+    it "app closes when nothing entered" do
+      allow(STDIN).to receive(:gets).and_return("")
+      appointment.print_menu
+      expect(appointment).to_not receive(:check_availability)
+    end
+  end
 end
