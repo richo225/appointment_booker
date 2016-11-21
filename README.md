@@ -6,17 +6,22 @@ A command line program that allows patients to book appointments with a doctor, 
 Installing
 ------------
 
-Clone the repo to your machine
-
+Clone the repository:
 ```
 $ git clone git@github.com:richo225/appointment_booker.git
 $ cd appointment_booker
-$ ruby availability.rb *requested_time*
 ```
-View test results
-
+Get the required gems:
+```
+$ bundle install
+```
+View test results:
 ```
 $ rspec
+```
+Book an appointment!
+```
+$ ruby availability.rb *requested_time*
 ```
 
 Running the app
