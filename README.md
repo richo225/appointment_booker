@@ -1,4 +1,4 @@
-Appointment booker - Babylon Health
+Appointment booker
 ==================
 
 A command line program that allows patients to book appointments with a doctor, using the dataset provided. It meets all the specifications asked for but I also included a menu loop after inputting the first parameter. I felt like this was better than re-running availability.rb each time - it meant simpler testing and no need to write the deleted appointments to availability_slots.json.
